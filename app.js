@@ -24,6 +24,13 @@ app.post("/", (req, res) => {
   const nom = req.body.nom;
   const prenom = req.body.prenom;
 
+  /**
+   * Format de données recommandé par mailchimp
+   * les données qu'on souhaite envoyer au server sont :
+   * ! le mail
+   * ! le status (selon qu'il a souscrit ou non)
+   * !le nom et le prenom
+   */
   const data = {
     members: [
       {
@@ -37,18 +44,36 @@ app.post("/", (req, res) => {
     ],
   };
 
+  //transformation des données en format JSON
   const jsonData = JSON.stringify(data);
+
+  //Création de l'options de la methode request (voir doc sur nodeJS)
   const options = {
     method: "POST",
     auth: "stephane97:" + API_KEY,
   };
+
+  //creation de la requette
   const request = https.request(url, options, (response) => {
-    response.on("data", (data) => {
-      console.log(JSON.parse(data));
-    });
+    if (response.statusCode === 200) {
+      res.sendFile(__dirname + "/succes.html");
+    } else {
+      res.sendFile(__dirname + "/faillure.html");
+    }
+    response.on("data", (data) => {});
   });
+
+  console.log(request);
+
+  //Envoie de la requette
   request.write(jsonData);
+
+  //Fermeture de la requette
   request.end();
+});
+
+app.post("/faillure", (req, res) => {
+  res.redirect("/");
 });
 
 app.listen(port, () => {
