@@ -3,17 +3,15 @@ const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const https = require("https");
 const Contact = require("./contact");
-const aws = require("aws-sdk");
-
-let s3 = new aws.S3({
-  accessKeyId: process.env.S3_KEY,
-  secretAccessKey: process.env.S3_SECRET,
-});
 
 const app = express();
 dotenv.config();
 
-const url = "https://us14.api.mailchimp.com/3.0/lists/" + s3.accessKeyId;
+const API_KEY = process.env.API_KEY;
+const port = process.env.PORT;
+const LIST_ID = process.env.ID;
+
+const url = "https://us14.api.mailchimp.com/3.0/lists/" + LIST_ID;
 
 //module utilisé
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -58,7 +56,7 @@ app.post("/", (req, res) => {
   //Création de l'options de la methode request (voir doc sur nodeJS)
   const options = {
     method: "POST",
-    auth: "stephane97:" + s3.secretAccessKey,
+    auth: "stephane:" + API_KEY,
   };
 
   //creation de la requette
@@ -72,8 +70,6 @@ app.post("/", (req, res) => {
       //console.log(JSON.parse(data));
     });
   });
-
-  console.log(request);
 
   //Envoie de la requette
   request.write(jsonData);
@@ -90,6 +86,6 @@ app.post("/succes", (req, res) => {
   res.redirect("/");
 });
 
-app.listen(process.env.PORT, () => {
-  //console.log("server ok ! port : " + port);
+app.listen(port, () => {
+  console.log("server ok ! port : " + port);
 });
