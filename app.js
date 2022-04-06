@@ -3,11 +3,18 @@ const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const https = require("https");
 const Contact = require("./contact");
+const aws = require("aws-sdk");
+
+let secretValue = new aws.S3({
+  accessKeyId: process.env.S3_KEY,
+  secretAccessKey: process.env.S3_SECRET,
+});
 
 const app = express();
 dotenv.config();
 
-const url = "https://us14.api.mailchimp.com/3.0/lists/" + process.env.S3_KEY;
+const url =
+  "https://us14.api.mailchimp.com/3.0/lists/" + secretValue.accessKeyId;
 
 //module utilisé
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -52,7 +59,7 @@ app.post("/", (req, res) => {
   //Création de l'options de la methode request (voir doc sur nodeJS)
   const options = {
     method: "POST",
-    auth: "stephane97:" + process.env.S3_SECRET,
+    auth: "stephane97:" + secretValue.secretAccessKey,
   };
 
   //creation de la requette
