@@ -57,23 +57,12 @@
 
         <div class="form-floating">
           <input
-            type="email"
-            name="mail"
-            class="form-control top"
-            id="floatingInput"
-            placeholder="name@example.com"
-            autofocus
-          />
-          <label for="floatingInput">Adresse mail</label>
-        </div>
-
-        <div class="form-floating">
-          <input
             type="text"
             name="nom"
-            class="form-control middle"
+            class="form-control top"
             id="floatingLastName"
             placeholder="Nom"
+            autofocus
           />
           <label for="floatingLastName">Nom</label>
         </div>
@@ -82,11 +71,34 @@
           <input
             type="text"
             name="prenom"
-            class="form-control bottom"
+            class="form-control middle"
             id="floatingFirstName"
             placeholder="Prenoms"
           />
           <label for="floatingFirstName">Prenoms </label>
+        </div>
+
+        <div class="form-floating">
+          <input
+            type="email"
+            name="mail"
+            class="form-control middle"
+            id="floatingInput"
+            placeholder="name@example.com"
+          />
+          <label for="floatingInput">Adresse mail</label>
+        </div>
+
+        <div class="form-floating">
+          <input
+            type="tel"
+            name="tel"
+            class="form-control bottom"
+            id="floatingInput"
+            placeholder="069-993-2911"
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+          />
+          <label for="floatingInput">Numero</label>
         </div>
 
         <button class="w-100 mt-4 btn btn-lg btn-primary" type="submit">

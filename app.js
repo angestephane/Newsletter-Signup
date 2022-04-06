@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const https = require("https");
+const Contact = require("./contact");
 
 const app = express();
 dotenv.config();
@@ -20,9 +21,12 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", (req, res) => {
-  const mail = req.body.mail;
-  const nom = req.body.nom;
-  const prenom = req.body.prenom;
+  const member = new Contact(
+    req.body.nom,
+    req.body.prenom,
+    req.body.mail,
+    req.body.tel
+  );
 
   /**
    * Format de données recommandé par mailchimp
@@ -34,11 +38,12 @@ app.post("/", (req, res) => {
   const data = {
     members: [
       {
-        email_address: mail,
+        email_address: member.email,
         status: "subscribed",
         merge_fields: {
-          FNAME: prenom,
-          LNAME: nom,
+          FNAME: member.nom,
+          LNAME: member.prenom,
+          PHONE: member.phone,
         },
       },
     ],
@@ -60,8 +65,12 @@ app.post("/", (req, res) => {
     } else {
       res.sendFile(__dirname + "/faillure.html");
     }
-    response.on("data", (data) => {});
+    response.on("data", (data) => {
+      //console.log(JSON.parse(data));
+    });
   });
+
+  console.log(request);
 
   //Envoie de la requette
   request.write(jsonData);
