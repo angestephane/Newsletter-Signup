@@ -87,6 +87,6 @@ app.post("/succes", (req, res) => {
   res.redirect("/");
 });
 
-app.listen(process.env.PORT || myPort, () => {
-  console.log("server ok ! port : " + port);
+app.listen(process.env.PORT, () => {
+  //console.log("server ok ! port : " + port);
 });
