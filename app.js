@@ -7,10 +7,7 @@ const Contact = require("./contact");
 const app = express();
 dotenv.config();
 
-const myPort = process.env.MYPORT;
-const listID = process.env.ID;
-const API_KEY = process.env.APIKey;
-const url = "https://us14.api.mailchimp.com/3.0/lists/" + listID;
+const url = "https://us14.api.mailchimp.com/3.0/lists/" + process.env.ID;
 
 //module utilisé
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -55,7 +52,7 @@ app.post("/", (req, res) => {
   //Création de l'options de la methode request (voir doc sur nodeJS)
   const options = {
     method: "POST",
-    auth: "stephane97:" + API_KEY,
+    auth: "stephane97:" + process.env.API_KEY,
   };
 
   //creation de la requette
