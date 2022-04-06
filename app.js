@@ -7,7 +7,8 @@ const Contact = require("./contact");
 const app = express();
 dotenv.config();
 
-port = process.env.PORT;
+const myPort = process.env.MYPORT;
+const port = process.env.PORT;
 const listID = process.env.ID;
 const API_KEY = process.env.APIKey;
 const url = "https://us14.api.mailchimp.com/3.0/lists/" + listID;
@@ -87,6 +88,6 @@ app.post("/succes", (req, res) => {
   res.redirect("/");
 });
 
-app.listen(port, () => {
+app.listen(port || myPort, () => {
   console.log("server ok ! port : " + port);
 });
