@@ -7,7 +7,7 @@ const Contact = require("./contact");
 const app = express();
 dotenv.config();
 
-const url = "https://us14.api.mailchimp.com/3.0/lists/" + process.env.ID;
+const url = "https://us14.api.mailchimp.com/3.0/lists/" + process.env.ID_VALUE;
 
 //module utilisé
 app.use(bodyParser.urlencoded({ extended: true }));
