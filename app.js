@@ -13,7 +13,7 @@ const url = "https://us14.api.mailchimp.com/3.0/lists/" + listID;
 
 //module utilisé
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("public"));
+app.use(express.static("public")); //Lecture des fichiers static
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/signup.html");
@@ -63,8 +63,6 @@ app.post("/", (req, res) => {
     response.on("data", (data) => {});
   });
 
-  console.log(request);
-
   //Envoie de la requette
   request.write(jsonData);
 
@@ -73,6 +71,10 @@ app.post("/", (req, res) => {
 });
 
 app.post("/faillure", (req, res) => {
+  res.redirect("/");
+});
+
+app.post("/succes", (req, res) => {
   res.redirect("/");
 });
 
